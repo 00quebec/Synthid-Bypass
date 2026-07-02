@@ -12,12 +12,19 @@ _THIS_DIR = Path(__file__).resolve().parent
 _IMPACT_MODULES_DIR = None
 
 for _parent in (_THIS_DIR.parent, *_THIS_DIR.parents):
-    _candidate = _parent / "ComfyUI-Impact-Pack" / "modules"
-    if _candidate.is_dir():
-        _IMPACT_MODULES_DIR = _candidate
-        if str(_candidate) not in sys.path:
-            sys.path.append(str(_candidate))
-        break
+    _candidates = [
+        _parent / "ComfyUI-Impact-Pack" / "modules",
+        _parent / "comfyui-impact-pack" / "modules",
+    ]
+    for _candidate in _candidates:
+        if _candidate.is_dir():
+            _IMPACT_MODULES_DIR = _candidate
+            if str(_candidate) not in sys.path:
+                sys.path.append(str(_candidate))
+            break
+    else:
+        continue
+    break
 
 
 try:
